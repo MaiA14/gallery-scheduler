@@ -1,8 +1,8 @@
 # Gallery scheduler
 
 Technologies:\
-Frontend: React Hooks, SCSS\
-Backend: Node.js, Express
+Frontend: React Hooks, Masonary, SCSS, Socket.io-client, Axios, sweetalert\
+Backend: Node.js, Node-cron, Express, Mongodb, Axios, dotenv, Socket.io
 
 ## Installation
 
@@ -13,11 +13,25 @@ npm install
 ```
 
 ## Run project:
-Run backend:
+Run backend - run it before running the frontend.
 ```
 node server
 ```
+
+create .env file with this variable in backend folder:
+
+```
+API_KEY={place_your_key_here}
+```
+
+Get a key from this site:
+```
+https://giphy.com/
+```
+
 Run frontend:
 ```
 npm start
 ```
+![Image](https://res.cloudinary.com/dtwqtpteb/image/upload/v1605262505/vfr1qfypjqpvgsuborlp.gif
+)
