@@ -1,0 +1,10 @@
+// Setup
+@import "setup/variables.scss";
+
+// Basics
+@import "basics/base.scss";
+@import "basics/buttons.scss";
+@import "basics/typography.scss";
+
+// Components
+@import "components/_home_page.scss";

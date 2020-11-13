@@ -1,0 +1,76 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+
+.container{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+
+   
+.header{
+    font-family: "OpenSans-SemiBold";
+    width: 100%;
+    font-weight: bold;
+    padding: 10px;
+    background: $clr1;
+    background: linear-gradient(90deg,$clr1 0%, $clr2 100%);
+    color: $clr3;
+    font-size: 40px;
+    padding-left: 20px;
+    margin-bottom: 20px;
+    padding-left: 10px;
+}
+
+.app-desc {
+  margin-bottom: 20px;
+  font-size: 20px;
+  font-family: "OpenSans-Regular";
+}
+
+  /* MEDIA QUERIES */
+  @media (max-width: 760px) {
+    .container {
+      margin: 0 10px;
+    }
+    
+    .btns-panel {
+      flex-direction: column;
+    }
+
+    .inputs-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+  }
+
+  /* SWAL */
+  .swal-foote {
+    display: flex;
+    justify-content: center;
+  }
+
+  /* INPUTS */
+
+  .inputs-wrapper{
+    display: flex;
+    justify-content: center;
+
+    .form-input {
+      outline: none;
+      border: 1px solid rgba(0,0,0,.4);
+      display: block;
+      width: 200px;
+      height: 50px;
+      padding: 10px;
+      border-radius: 5px;
+      margin-bottom: 10px;
+      margin-right: 10px;
+    }
+  }

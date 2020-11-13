@@ -1,0 +1,40 @@
+* {
+    box-sizing: border-box;
+}
+
+* {
+    outline: none;
+}
+
+
+a { 
+    text-align: center;
+    color: $clr1;
+    text-decoration: none;
+    font-family: "OpenSans-Regular";
+}
+
+a:hover {
+    text-decoration: none !important;
+    color: $clr3;
+    background-color: $clr1;
+}
+
+
+h1, h3, h4, h5, h6 {
+    font-family: schoolbell, serif;
+    margin-top: 0;
+    font-weight: normal;
+}
+
+h2{
+    font-size: rem(15px);
+}
+
+h1 {
+    font-size: rem(60px);
+}
+
+p {
+    margin: 0 0 rem(12px);
+}
