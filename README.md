@@ -31,7 +31,7 @@ https://giphy.com/
 
 Run frontend:
 ```
-npm start
+yarn start
 ```
 ![Image](https://res.cloudinary.com/dtwqtpteb/image/upload/v1605262725/zv6uh29fzqw1r8vgxcpa.gif
 )
