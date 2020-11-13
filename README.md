@@ -33,5 +33,5 @@ Run frontend:
 ```
 npm start
 ```
-![Image](https://res.cloudinary.com/dtwqtpteb/image/upload/v1605262505/vfr1qfypjqpvgsuborlp.gif
+![Image](https://res.cloudinary.com/dtwqtpteb/image/upload/v1605262725/zv6uh29fzqw1r8vgxcpa.gif
 )
