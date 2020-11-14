@@ -5,8 +5,10 @@ let jobMap = {};
 
 const addJob = (seconds, jobId, gif) => {
   const job = cron.schedule(`*/${seconds} * * * * *`,()=>{
-      sendJob(JSON.stringify({ image: gif, id: jobId }));
-      console.info(`job ${jobId}`);
+      if (gif !== null) {
+        sendJob(JSON.stringify({ image: gif, id: jobId }));
+        console.info(`job ${jobId}`);
+      }
   });
 
   jobMap[jobId] = job;
