@@ -35,3 +35,7 @@ yarn start
 ```
 ![Image](https://res.cloudinary.com/dtwqtpteb/image/upload/v1605262725/zv6uh29fzqw1r8vgxcpa.gif
 )
+
+![Image](
+https://res.cloudinary.com/dtwqtpteb/image/upload/v1605368767/s366xldudj37fdbvs90m.png
+)
