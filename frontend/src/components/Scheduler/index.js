@@ -7,10 +7,11 @@ import swal from 'sweetalert';
 
 const Scheduler = () => {
 
-    const [sub, setSubject] = useState("");
-    const [seconds, setSeconds] = useState("");
+    let [sub, setSubject] = useState("");
+    let [seconds, setSeconds] = useState("");
     const [photos, setPhotos] = useState([]);
     const initialRender = useRef(true);
+    const invalidImgs = useRef({});
 
     useEffect(() => {
       if (initialRender.current) {
@@ -19,6 +20,7 @@ const Scheduler = () => {
         localStorage.setItem('photos', JSON.stringify(photos));
       }
     }, [photos]);
+
 
     useEffect(() => {
         SocketService.setup();
@@ -37,9 +39,12 @@ const Scheduler = () => {
 
     const onJobAdd = async(e) => {
         e.preventDefault();
-            if (isNaN(seconds) || seconds === '') {
-              swal(`Please enter a valid input in seconds`);
-            } else {
+        sub = sub.replace(/\s/g, '');
+        seconds = seconds.replace(/\s/g, '');
+            if (isNaN(seconds) || !seconds || !sub) {
+              swal(`Please enter a valid input`);
+            }
+             else {
                 try {
                   const job = { subject: sub, seconds: seconds };
                   await schedulerService.addJob(job);
@@ -62,10 +67,21 @@ const Scheduler = () => {
         }
     };
 
+    const hasImageData = (img) => {
+      if (img && img.image && img.image.width)
+        return img;
+      else {
+        if (invalidImgs.current[img.id] === undefined) {
+          invalidImgs.current[img.id] = true;
+        }
+      }
+    }
+
     const Photos = () => (
         <Masonry>
           {photos.map((imgData, index) => (
-            <Photo style={{  width: `${(imgData.image.width / 2) + 26}px`,
+            hasImageData(imgData) && 
+            <Photo style={{  width: `${(imgData.image.width  / 2) + 26}px`,
             height: `${(imgData.image.height / 2) + 26}px`,}}>
               <Close onClick={onCancelJob} data-id={imgData.id}>x</Close>
               <img style={{
@@ -75,7 +91,7 @@ const Scheduler = () => {
                 border: '1px solid lightgray',
                 borderRadius: '8px' }}
                 key={imgData.id + index} alt='' src={imgData.image.url} />
-            </Photo>
+            </Photo> 
           ))}
         </Masonry>
       )

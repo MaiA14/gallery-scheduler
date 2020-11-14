@@ -13,9 +13,11 @@ const addJob = (seconds, jobId, gif) => {
 }
 
 const cancelJob = (jobId) => {
-    console.info('stop', jobId);
+    console.info('stop', jobId)
     let currentJob = jobMap[jobId];
-    currentJob.stop();
+    if (currentJob !== undefined) {
+        currentJob.stop();
+    }
 }
 
 module.exports = {

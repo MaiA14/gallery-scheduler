@@ -6,15 +6,21 @@ require('dotenv').config();
 const fetchUrlsData = async(subject) => {
     try {
         const res = await axios.get(
-            `https://api.giphy.com/v1/gifs/search?api_key=${process.env.API_KEY}=${subject}&limit=25`
+            `https://api.giphy.com/v1/gifs/search?api_key=${process.env.API_KEY}=${subject}&limit=30`
         );
         const gifData = await res.data.data;
-        const gifUrlData = gifData.map((data) => ({
-            url: data.images.original.url,
-            height: data.images.original.height,
-            width: data.images.original.width
-        }));
-        return gifUrlData;
+        if (gifData.length === 0) {
+            return null;
+        }
+        else {
+            const gifUrlData = gifData.map((data) => ({
+                url: data.images.original.url,
+                height: data.images.original.height,
+                width: data.images.original.width
+            }));
+            return gifUrlData 
+        }
+    
     } catch (e) {
         console.error(e);
     }
@@ -23,8 +29,11 @@ const fetchUrlsData = async(subject) => {
 const getRndGif = async(subject) => {
     try {
         const gifUrlsData = await fetchUrlsData(subject);
-        const rndGif = randomGif(gifUrlsData);
-        return rndGif;
+        if (gifUrlsData !== null) {
+            const rndGif = randomGif(gifUrlsData);
+            return rndGif;
+        }
+        return gifUrlsData;
     } catch (e) {
         console.error(e);
     }
