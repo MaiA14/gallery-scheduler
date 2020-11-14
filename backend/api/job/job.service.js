@@ -1,7 +1,6 @@
 const dbService = require("../../services/db.service");
 const ObjectId = require("mongodb").ObjectId;
 
-
 const query = async() => {
     const collection = await dbService.getCollection("job_collection");
     try {

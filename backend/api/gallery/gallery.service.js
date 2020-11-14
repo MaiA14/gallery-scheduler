@@ -3,5 +3,5 @@ const randomGif = (gifs) => {
 }
 
 module.exports = {
-    randomGif,
+    randomGif
 }

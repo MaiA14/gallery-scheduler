@@ -1,4 +1,3 @@
-const schedule = require('node-schedule');
 const jobService = require('./job.service');
 const schedulerService = require('../scheduler/scheduler.service');
 const { getRndGif } = require('../gallery/gallery.controller');

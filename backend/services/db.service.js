@@ -6,7 +6,6 @@ module.exports = {
     getCollection
 }
 
-// Database Name
 const dbName = 'job_db';
 
 var dbConn = null;
