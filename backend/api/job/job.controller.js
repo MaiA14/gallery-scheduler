@@ -14,10 +14,9 @@ const getJobs = async(req, res) => {
 const addJob = async(req, res) => {
     let subject = req.body.subject;
     let seconds = req.body.seconds;
-    let gif = await getRndGif(subject);
-    let job = { subject: subject, seconds: seconds, gif: gif };
-
     try {
+        const gif = await getRndGif(subject);
+        const job = { subject: subject, seconds: seconds, gif: gif };
         await jobService.add(job);
         res.send(job);
         schedulerService.addJob(seconds, job._id, job.gif);

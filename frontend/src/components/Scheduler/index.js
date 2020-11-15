@@ -48,7 +48,6 @@ const Scheduler = () => {
                 try {
                   const job = { subject: sub, seconds: seconds };
                   await schedulerService.addJob(job);
-                  swal(`Job is added:\n Subject: ${sub}\n Seconds: ${seconds}`);
                   setSubject('');
                   setSeconds('');
                 } catch (e) {
