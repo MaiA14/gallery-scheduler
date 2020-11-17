@@ -9,7 +9,10 @@ const Scheduler = () => {
 
     let [sub, setSubject] = useState("");
     let [seconds, setSeconds] = useState("");
+    let [email, setEmail] = useState("");
     const [photos, setPhotos] = useState([]);
+    let [favSubjeces, setfavSubjects] = useState([]);
+    // let [favSubjeces, setfavSubjects] = useState({});
     const initialRender = useRef(true);
     const invalidImgs = useRef({});
 
@@ -20,7 +23,6 @@ const Scheduler = () => {
         localStorage.setItem('photos', JSON.stringify(photos));
       }
     }, [photos]);
-
 
     useEffect(() => {
         SocketService.setup();
@@ -41,15 +43,17 @@ const Scheduler = () => {
         e.preventDefault();
         sub = sub.replace(/\s/g, '');
         seconds = seconds.replace(/\s/g, '');
-            if (isNaN(seconds) || !seconds || !sub) {
+            if (isNaN(seconds) || !seconds || !sub || !email) {
               swal(`Please enter a valid input`);
             }
              else {
                 try {
-                  const job = { subject: sub, seconds: seconds };
-                  await schedulerService.addJob(job);
+                  const job = { subject: sub, seconds: seconds, email: email };
+                  const jobData = await schedulerService.addJob(job);
+                  setfavSubjects(jobData.userSubjects);
                   setSubject('');
                   setSeconds('');
+                  setEmail('');
                 } catch (e) {
                   console.error(e);
               }
@@ -77,6 +81,11 @@ const Scheduler = () => {
     }
 
     const Photos = () => (
+      <React.Fragment>
+       <div className="user-subject-container">
+        {favSubjeces.map((subject) =>
+            <div className="subject">{subject}</div>)}
+            </div>
         <Masonry>
           {photos.map((imgData, index) => (
             hasImageData(imgData) && 
@@ -93,7 +102,14 @@ const Scheduler = () => {
             </Photo> 
           ))}
         </Masonry>
+        </React.Fragment>
       )
+
+      // const userSubjects = () => {
+      //   <div>
+      //     {favSubjeces.map(())}
+      //   </div>
+      // }
     
       return (
         <React.Fragment>
@@ -108,6 +124,9 @@ const Scheduler = () => {
                 <input type="text" placeholder="seconds" autoComplete="off" 
                 name="seconds" className="form-input"
                 onChange={e => setSeconds(e.target.value)} value={seconds}></input>
+                <input type="email" placeholder="email" autoComplete="off" 
+                name="email" className="form-input"
+                onChange={e => setEmail(e.target.value)} value={email}></input>
                 <button className="app-button" onClick={onJobAdd}>Add a job</button>
               </div>
             </form>

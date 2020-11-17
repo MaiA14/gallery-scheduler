@@ -11,14 +11,28 @@ const getJobs = async(req, res) => {
     }
 }
 
-const addJob = async(req, res) => {
+const fetchUserSubjects = async (email) => {
+    try {
+        const user = await jobService.getUserByEmail(email);
+        const userSubjects = user.map(user => user.subject);
+        const occurences = await jobService.getUserSubsOccourences(userSubjects);
+        return occurences;
+    }
+    catch(e) {
+        console.error(e);
+    }
+}
+
+const addJob = async (req, res) => {
     let subject = req.body.subject;
     let seconds = req.body.seconds;
+    let email = req.body.email;
     try {
         const gif = await getRndGif(subject);
-        const job = { subject: subject, seconds: seconds, gif: gif };
+        const job = { subject: subject, seconds: seconds, email: email, gif: gif };
         await jobService.add(job);
-        res.send(job);
+        const userSubjects = await fetchUserSubjects(email);
+        res.send({userSubjects, job});
         schedulerService.addJob(seconds, job._id, job.gif);
     } catch (e) {
         console.error(e);
