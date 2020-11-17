@@ -81,11 +81,6 @@ const Scheduler = () => {
     }
 
     const Photos = () => (
-      <React.Fragment>
-       <div className="user-subject-container">
-        {favSubjeces.map((subject) =>
-            <div className="subject">{subject}</div>)}
-            </div>
         <Masonry>
           {photos.map((imgData, index) => (
             hasImageData(imgData) && 
@@ -102,14 +97,7 @@ const Scheduler = () => {
             </Photo> 
           ))}
         </Masonry>
-        </React.Fragment>
       )
-
-      // const userSubjects = () => {
-      //   <div>
-      //     {favSubjeces.map(())}
-      //   </div>
-      // }
     
       return (
         <React.Fragment>
@@ -130,6 +118,11 @@ const Scheduler = () => {
                 <button className="app-button" onClick={onJobAdd}>Add a job</button>
               </div>
             </form>
+            {favSubjeces.length !== 0 && <div className="user-subject-container">
+              <h3>User Subjects:</h3>
+              {favSubjeces.map((subject) =>
+            <div className="subject">{subject}</div>)}
+            </div>}
             <Photos/>
           </React.Fragment>
         );

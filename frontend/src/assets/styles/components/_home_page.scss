@@ -53,7 +53,13 @@ body {
   .user-subject-container {
     font-family: "OpenSans-Regular";
     text-align: center;
+
+    h3 {
+      font-family: "OpenSans-Regular";
+    }
   }
+
+  
 
   /* SWAL */
   .swal-foote {
