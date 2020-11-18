@@ -1,6 +1,8 @@
 const jobService = require('./job.service');
 const schedulerService = require('../scheduler/scheduler.service');
 const { getRndGif } = require('../gallery/gallery.controller');
+const galleryService = require('../gallery/gallery.service');
+const galleryController = require('../gallery/gallery.controller');
 
 const getJobs = async(req, res) => {
     try {
@@ -23,19 +25,20 @@ const fetchUserSubjects = async (email) => {
     }
 }
 
+
 const addJob = async (req, res) => {
     let subject = req.body.subject;
     let seconds = req.body.seconds;
     let email = req.body.email;
     let numOfGifs = req.body.numOfGifs;
     try {
-        const gif = await getRndGif(subject);
+        const gif = await galleryController.fetchUrlsData(subject);
         const job = { subject: subject, seconds: seconds, email: email, numOfGifs: numOfGifs, gif: gif };
         await jobService.add(job);
         const userSubjects = await fetchUserSubjects(email);
         res.send({userSubjects, job});
         if (job.numOfGifs === null) {
-            schedulerService.addJob(seconds, job._id, job.gif);     
+            schedulerService.addJob(seconds, job._id, job.gif, subject);     
         }
         else {
             schedulerService.gifPerJobs(seconds, job._id, numOfGifs, job.gif);

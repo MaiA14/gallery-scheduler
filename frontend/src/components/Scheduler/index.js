@@ -49,7 +49,6 @@ const Scheduler = () => {
                 try {
                   numOfGifs = numOfGifs === '' ? null : numOfGifs;
                   const job = { subject: sub, seconds, email, numOfGifs };
-                  console.log(job);
                   const jobData = await schedulerService.addJob(job);
                   setfavSubjects(jobData.userSubjects);
                   setSubject('');
@@ -80,7 +79,6 @@ const Scheduler = () => {
           invalidImgs.current[img.id] = true;
         }
       }
-      console.log(invalidImgs);
     }
 
     const Photos = () => (
