@@ -22,7 +22,7 @@ if (process.env.NODE_ENV === 'production') {
     app.use(express.static(path.resolve(__dirname, 'public')));
 } else {
     const corsOptions = {
-        origin: 'http://localhost:3030, http://localhost:3000, *',
+        origin: 'http://localhost:3000',
         credentials: true
     };
     app.use(cors(corsOptions));
