@@ -15,13 +15,13 @@ const addJob = async (seconds, jobId, gif, subject) => {
   jobMap[jobId] = job;
 }
 
-const gifPerJobs = (seconds, jobId, numOfGifs, gif) => {
+const gifPerJobs = (seconds, jobId, numOfGifs, gif, subject) => {
   let i = 0;
-  const job = cron.schedule(`*/${seconds} * * * * *`,()=>{
+  const job = cron.schedule(`*/${seconds} * * * * *`,async ()=>{
       if (gif !== null) {
-       
-          sendJob(JSON.stringify({ image: gif, id: jobId }));
-          console.info(`job ${jobId}`);
+        let rndGif = await getRndGif(subject);
+        sendJob(JSON.stringify({ image: rndGif, id: jobId }));
+        console.info(`job ${jobId}`);
       }
 
       i++;

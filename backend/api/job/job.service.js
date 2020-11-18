@@ -33,7 +33,19 @@ async function getUserByEmail(email) {
       console.error(`ERROR: while finding user ${email}`);
       throw e;
     }
-  }
+}
+
+const isSubjectExist = async (subject) => {
+    const collection = await dbService.getCollection('job_collection');
+    collection.find({subject: subject}, {$exists: true}).toArray(function(err, doc){     
+        if (doc) {
+            console.log('Subject is already exist'); 
+        } else if (!doc) {
+            console.log("Not in docs");
+        }
+    
+    })
+};
 
 const remove = async(jobId) => {
     const collection = await dbService.getCollection("job_collection");
@@ -67,5 +79,6 @@ module.exports = {
     add,
     remove,
     getUserByEmail,
-    getUserSubsOccourences
+    getUserSubsOccourences,
+    isSubjectExist
 };

@@ -3,6 +3,7 @@ const schedulerService = require('../scheduler/scheduler.service');
 const { getRndGif } = require('../gallery/gallery.controller');
 const galleryService = require('../gallery/gallery.service');
 const galleryController = require('../gallery/gallery.controller');
+const { isSubjectExist } = require('./job.service');
 
 const getJobs = async(req, res) => {
     try {
@@ -31,6 +32,7 @@ const addJob = async (req, res) => {
     let seconds = req.body.seconds;
     let email = req.body.email;
     let numOfGifs = req.body.numOfGifs;
+    let subjectCheck = jobService.isSubjectExist(subject);
     try {
         const gif = await galleryController.fetchUrlsData(subject);
         const job = { subject: subject, seconds: seconds, email: email, numOfGifs: numOfGifs, gif: gif };
@@ -41,7 +43,7 @@ const addJob = async (req, res) => {
             schedulerService.addJob(seconds, job._id, job.gif, subject);     
         }
         else {
-            schedulerService.gifPerJobs(seconds, job._id, numOfGifs, job.gif);
+            schedulerService.gifPerJobs(seconds, job._id, numOfGifs, job.gif, subject);
         }
     } catch (e) {
         console.error(e);

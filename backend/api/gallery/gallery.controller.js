@@ -6,7 +6,7 @@ require('dotenv').config();
 const fetchUrlsData = async(subject) => {
     try {
         const res = await axios.get(
-            `https://api.giphy.com/v1/gifs/search?api_key=xyX26omUuCYxbPO1HXC5ADKEl16a2aoQ&q=${subject}&limit=30`
+            `https://api.giphy.com/v1/gifs/search?api_key=${process.env.API_KEY}=${subject}&limit=30`
         );
         const gifData = await res.data.data;
         if (gifData.length === 0) {
