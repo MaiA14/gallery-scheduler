@@ -6,13 +6,12 @@ import { Photo, Close } from './styles';
 import swal from 'sweetalert';
 
 const Scheduler = () => {
-
     let [sub, setSubject] = useState("");
     let [seconds, setSeconds] = useState("");
     let [email, setEmail] = useState("");
-    const [photos, setPhotos] = useState([]);
+    let [numOfGifs, setNumOfGifs] = useState("");
     let [favSubjeces, setfavSubjects] = useState([]);
-    // let [favSubjeces, setfavSubjects] = useState({});
+    const [photos, setPhotos] = useState([]);
     const initialRender = useRef(true);
     const invalidImgs = useRef({});
 
@@ -48,12 +47,15 @@ const Scheduler = () => {
             }
              else {
                 try {
-                  const job = { subject: sub, seconds: seconds, email: email };
+                  numOfGifs = numOfGifs === '' ? null : numOfGifs;
+                  const job = { subject: sub, seconds, email, numOfGifs };
+                  console.log(job);
                   const jobData = await schedulerService.addJob(job);
                   setfavSubjects(jobData.userSubjects);
                   setSubject('');
                   setSeconds('');
                   setEmail('');
+                  setNumOfGifs('');
                 } catch (e) {
                   console.error(e);
               }
@@ -78,6 +80,7 @@ const Scheduler = () => {
           invalidImgs.current[img.id] = true;
         }
       }
+      console.log(invalidImgs);
     }
 
     const Photos = () => (
@@ -107,17 +110,22 @@ const Scheduler = () => {
             </div>
             <form>
               <div className="inputs-wrapper">
-                <input type="text" placeholder="subject" name="sub" className="form-input"
-                onChange={e => setSubject(e.target.value)} value={sub}></input>
+                <input type="text" placeholder="subject"
+                  name="sub" className="form-input"
+                  onChange={e => setSubject(e.target.value)} value={sub}/>
                 <input type="text" placeholder="seconds" autoComplete="off" 
-                name="seconds" className="form-input"
-                onChange={e => setSeconds(e.target.value)} value={seconds}></input>
+                  name="seconds" className="form-input"
+                  onChange={e => setSeconds(e.target.value)} value={seconds}/>
                 <input type="email" placeholder="email" autoComplete="off" 
-                name="email" className="form-input"
-                onChange={e => setEmail(e.target.value)} value={email}></input>
+                  name="email" className="form-input"
+                  onChange={e => setEmail(e.target.value)} value={email}/>
+                <input type="number" placeholder="number of gifs per job" autoComplete="off" 
+                  name="numOfGifs" className="form-input"
+                  onChange={e => setNumOfGifs(e.target.value)} value={numOfGifs}/>
                 <button className="app-button" onClick={onJobAdd}>Add a job</button>
               </div>
             </form>
+            {/* {invalidImgs.length > 0 && <div>No results for this Subjects</div>} */}
             {favSubjeces.length !== 0 && <div className="user-subject-container">
               <h3>User Subjects:</h3>
               {favSubjeces.map((subject) =>

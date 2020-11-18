@@ -27,13 +27,19 @@ const addJob = async (req, res) => {
     let subject = req.body.subject;
     let seconds = req.body.seconds;
     let email = req.body.email;
+    let numOfGifs = req.body.numOfGifs;
     try {
         const gif = await getRndGif(subject);
-        const job = { subject: subject, seconds: seconds, email: email, gif: gif };
+        const job = { subject: subject, seconds: seconds, email: email, numOfGifs: numOfGifs, gif: gif };
         await jobService.add(job);
         const userSubjects = await fetchUserSubjects(email);
         res.send({userSubjects, job});
-        schedulerService.addJob(seconds, job._id, job.gif);
+        if (job.numOfGifs === null) {
+            schedulerService.addJob(seconds, job._id, job.gif);     
+        }
+        else {
+            schedulerService.gifPerJobs(seconds, job._id, numOfGifs, job.gif);
+        }
     } catch (e) {
         console.error(e);
     }

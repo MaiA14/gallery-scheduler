@@ -1,6 +1,5 @@
 const { sendJob } = require('../socket/socket.service');
 var cron = require('node-cron');
-
 let jobMap = {};
 
 const addJob = (seconds, jobId, gif) => {
@@ -9,6 +8,23 @@ const addJob = (seconds, jobId, gif) => {
         sendJob(JSON.stringify({ image: gif, id: jobId }));
         console.info(`job ${jobId}`);
       }
+  });
+
+  jobMap[jobId] = job;
+}
+
+const gifPerJobs = (seconds, jobId, numOfGifs, gif) => {
+  let i = 0;
+  const job = cron.schedule(`*/${seconds} * * * * *`,()=>{
+      if (gif !== null) {
+       
+          sendJob(JSON.stringify({ image: gif, id: jobId }));
+          console.info(`job ${jobId}`);
+      }
+
+      i++;
+      if (i > numOfGifs - 1)
+        cancelJob(jobId);  
   });
 
   jobMap[jobId] = job;
@@ -23,5 +39,5 @@ const cancelJob = (jobId) => {
 }
 
 module.exports = {
-    addJob, cancelJob
+    addJob, cancelJob, gifPerJobs
 }
