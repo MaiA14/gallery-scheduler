@@ -1,12 +1,14 @@
 const { sendJob } = require('../socket/socket.service');
+const { getRndGif } = require('../gallery/gallery.controller');
 var cron = require('node-cron');
 
 let jobMap = {};
 
-const addJob = (seconds, jobId, gif) => {
-  const job = cron.schedule(`*/${seconds} * * * * *`,()=>{
+const addJob = async (seconds, jobId, gif, subject) => {
+  const job = cron.schedule(`*/${seconds} * * * * *`,async ()=>{
       if (gif !== null) {
-        sendJob(JSON.stringify({ image: gif, id: jobId }));
+        let rndGif = await getRndGif(subject);
+        sendJob(JSON.stringify({ image: rndGif, id: jobId }));
         console.info(`job ${jobId}`);
       }
   });

@@ -5,8 +5,9 @@ require('dotenv').config();
 
 const fetchUrlsData = async(subject) => {
     try {
+        const BASE_URL = 'http://api.giphy.com/v1/gifs/search';
         const res = await axios.get(
-            `https://api.giphy.com/v1/gifs/search?api_key=${process.env.API_KEY}=${subject}&limit=30`
+            `${BASE_URL}?api_key=${process.env.API_KEY}&q=${subject}&limit=20`
         );
         const gifData = await res.data.data;
         if (gifData.length === 0) {
@@ -40,5 +41,6 @@ const getRndGif = async(subject) => {
 }
 
 module.exports = {
-    getRndGif
+    getRndGif,
+    fetchUrlsData
 };
